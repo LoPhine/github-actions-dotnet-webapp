@@ -1,0 +1,33 @@
+name: .NET Core Build
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'
+
+    - name: Restore dependencies
+      run: dotnet restore **/*.csproj
+
+    - name: Build
+      run: dotnet build **/*.csproj --no-restore
+
+    - name: Run tests
+      run: dotnet test **/*Tests.csproj --no-build --verbosity normal
+
+    - name: Custom script to print message
+      run: echo "Build and test completed successfully!"
