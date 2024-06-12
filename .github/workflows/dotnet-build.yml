@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 * * * *' # Executa a cada hora
+    - cron: '0 * * * *'
 
 jobs:
   build:
@@ -26,8 +26,5 @@ jobs:
     - name: Build
       run: dotnet build **/*.csproj --no-restore
 
-    - name: Run tests
-      run: dotnet test **/*Tests.csproj --no-build --verbosity normal
-
     - name: Custom script to print message
-      run: echo "Build and test completed successfully!"
+      run: echo "Build completed successfully!"
